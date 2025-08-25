@@ -1,6 +1,6 @@
 FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-key del 7fa2af80
@@ -21,8 +21,8 @@ RUN wget -P /tmp \
     "https://github.com/conda-forge/miniforge/releases/download/23.11.0-0/Miniforge3-Linux-x86_64.sh" \ 
     && bash /tmp/Miniforge3-Linux-x86_64.sh -b -p /opt/conda \
     && rm /tmp/Miniforge3-Linux-x86_64.sh
-ENV PATH /opt/conda/bin:$PATH
-ENV CONDA_OVERRIDE_CUDA 12.2
+ENV PATH=/opt/conda/bin:$PATH
+ENV CONDA_OVERRIDE_CUDA=12.2
 RUN conda install pip pandas matplotlib numpy"<2.0.0" biopython scipy pdbfixer seaborn tqdm jupyter ffmpeg pyrosetta fsspec py3dmol chex dm-haiku dm-tree joblib ml-collections immutabledict optax jaxlib=*=*cuda* jax cuda-nvcc cudnn -c conda-forge -c anaconda -c nvidia  --channel https://conda.graylab.jhu.edu -y -n base
 
 # install ColabDesign
